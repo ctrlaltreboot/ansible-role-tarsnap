@@ -1,0 +1,21 @@
+---
+- name: download tarsnap sauce
+  get_url:
+    url: https://www.tarsnap.com/download/tarsnap-autoconf-{{tarsnap_version}}.tgz
+    checksum: sha2sum:{{tarsnap_sha1sum}}
+    dest: /tmp/tarsnap-autoconf-{{tarsnap_version}}
+
+- name: unpack the downloaded tarsnap sauce
+  unarchive: /tmp/tarsnap-autoconf-{{tarsnap_version}} dest=/tmp/tarsnap
+
+- name: run configure on the tarsnap sauce
+  command: ./configure chdir=/tmp/tarsnap
+
+- name: run make on the tarsnap sauce
+  command: make chdir=/tmp/tarsnap
+
+- name: run make on the tarsnap sauce
+  command: make all chdir=/tmp/tarsnap
+
+- name: run make on the tarsnap sauce
+  command: make install chdir=/tmp/tarsnap
