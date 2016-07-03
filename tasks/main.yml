@@ -1,12 +1,16 @@
 ---
+- name: include osx requirement installer if the machine target is osx
+  include: tasks/req_osx.yml
+  when: "ansible_os_family == 'Darwin'"
+
 - name: download tarsnap sauce
   get_url:
-    url: https://www.tarsnap.com/download/tarsnap-autoconf-{{tarsnap_version}}.tgz
-    checksum: sha2sum:{{tarsnap_sha1sum}}
-    dest: /tmp/tarsnap-autoconf-{{tarsnap_version}}
+    url: https://www.tarsnap.com/download/tarsnap-autoconf-{{ tarsnap_version }}.tgz
+    checksum: sha2sum:{{ tarsnap_sha1sum }}
+    dest: /tmp/tarsnap-autoconf-{{ tarsnap_version }}
 
 - name: unpack the downloaded tarsnap sauce
-  unarchive: /tmp/tarsnap-autoconf-{{tarsnap_version}} dest=/tmp/tarsnap
+  unarchive: /tmp/tarsnap-autoconf-{{ tarsnap_version }} dest=/tmp/tarsnap
 
 - name: run configure on the tarsnap sauce
   command: ./configure chdir=/tmp/tarsnap
